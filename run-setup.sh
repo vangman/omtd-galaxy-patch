@@ -1,5 +1,6 @@
 GALAXY_VERSION="release_17.01"
 DOCKER_MACHINE_VERSION="v0.10.0"
+CONF_DIR=$PWD
 
 # Set properly the default system locale
 echo LC_ALL=\"en_US.UTF-8\" | sudo tee -a /etc/default/locale 
@@ -29,7 +30,7 @@ sudo ln -s ../mods-available/proxy.load proxy.load
 sudo ln -s ../mods-available/proxy_http.load proxy_http.load
 sudo ln -s ../mods-available/proxy.conf proxy.conf
 cd /etc/apache2/sites-available
-sudo patch -R 000-default.conf ~/galaxy-setup/000-default.conf.diff
+sudo patch -R 000-default.conf $CONF_DIR/000-default.conf.diff
 sudo systemctl restart apache2
 
 
@@ -54,13 +55,13 @@ git clone -b $GALAXY_VERSION https://github.com/galaxyproject/galaxy.git
 # Enable PostgreSQL and apply basic configuration changes
 cd ~/galaxy/config
 cp galaxy.ini.sample galaxy.ini
-patch -R galaxy.ini ~/galaxy-setup/galaxy.ini.diff
+patch -R galaxy.ini $CONF_DIR/galaxy.ini.diff
 
 # Enable Galaxy to run Docker
 cp job_conf.xml.sample_basic job_conf.xml
-patch -R job_conf.xml ~/galaxy-setup/job_conf.xml.diff 
+patch -R job_conf.xml $CONF_DIR/job_conf.xml.diff 
 
-cp ~/galaxy-setup/object_store_conf.xml .
+cp $CONF_DIR/object_store_conf.xml .
 
 
 # Install Pithos+ driver
@@ -68,7 +69,7 @@ cd ~/galaxy
 echo "# Pithos+" >> requirements.txt 
 echo "kamaki" >> requirements.txt 
 ## scp from remote location __init__.py and pithos.py to lib/galaxy/objectstore/
-cp ~/galaxy-setup/*.py ~/galaxy/lib/galaxy/objectstore
+cp $CONF_DIR/*.py ~/galaxy/lib/galaxy/objectstore
 
 echo "::Completed system configuration. System reboot recommended"
 
