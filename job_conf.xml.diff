@@ -1,0 +1,11 @@
+10c10
+<     <destinations default="docker_local">
+---
+>     <destinations>
+12,17d11
+< 	<destination id="docker_local" runner="local">
+<             <param id="docker_enabled">true</param>
+<             <param id="docker_memory">6G</param>
+<             <param id="docker_sudo">false</param>
+<             <param id="docker_net">bridge</param>
+<         </destination>

@@ -1,0 +1,16 @@
+99d98
+< database_connection = postgresql://galaxy:galaxypass@localhost/galaxy
+115d113
+< database_engine_option_server_side_cursors = True
+796c794
+< debug = False
+---
+> #debug = False
+809c807
+< use_interactive = False
+---
+> use_interactive = True
+968c966
+< require_login = True 
+---
+> #require_login = False
