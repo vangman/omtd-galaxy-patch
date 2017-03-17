@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<object_store type="hierarchical">
+    <backends>
+		<object_store type="pithos" id="primary" order="0">
+			<auth url="https://accounts.okeanos.grnet.gr/identity/v2.0" token="YOUR_USER_TOKEN" ignore_ssl="yes"/>
+			<container name="omtd" project="OKEANOS_PROJECT_ID" />
+			<cache path="database/object_store_cache" size="1000"/>
+			<extra_dir type="job_work" path="database/job_working_directory"/>
+			<extra_dir type="temp" path="database/tmp"/>
+		</object_store>
+		<object_store type="disk" id="secondary" order="1"> 
+			<files_dir path="database/files"/> 
+		</object_store> 
+    </backends>
+</object_store>
