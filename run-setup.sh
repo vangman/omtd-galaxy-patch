@@ -1,3 +1,6 @@
+GALAXY_VERSION="release_17.01"
+DOCKER_MACHINE_VERSION="v0.10.0"
+
 # Set properly the default system locale
 echo LC_ALL=\"en_US.UTF-8\" | sudo tee -a /etc/default/locale 
 
@@ -42,11 +45,13 @@ sudo docker run hello-world
 sudo groupadd docker
 sudo usermod -aG docker $USER
 sudo systemctl enable docker
-curl -L https://github.com/docker/machine/releases/download/v0.9.0-rc2/docker-machine-`uname -s`-`uname -m` >/tmp/docker-machine && chmod +x /tmp/docker-machine && sudo cp /tmp/docker-machine /usr/local/bin/docker-machine
+curl -L https://github.com/docker/machine/releases/download/$DOCKER_MACHINE_VERSION/docker-machine-`uname -s`-`uname -m` >/tmp/docker-machine && chmod +x /tmp/docker-machine && sudo cp /tmp/docker-machine /usr/local/bin/docker-machine
 
 # Clone Galaxy git repo locally
 cd ~
-git clone -b release_16.10 https://github.com/galaxyproject/galaxy.git
+git clone -b $GALAXY_VERSION https://github.com/galaxyproject/galaxy.git
+
+# Enable PostgreSQL and apply basic configuration changes
 cd ~/galaxy/config
 cp galaxy.ini.sample galaxy.ini
 patch -R galaxy.ini ~/galaxy-setup/galaxy.ini.diff
